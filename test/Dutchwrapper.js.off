@@ -1,0 +1,488 @@
+const crypto-blizToken = artifacts.require("crypto-blizToken");
+const CryptoWrapper = artifacts.require("CryptoWrapper");
+const PromissoryToken = artifacts.require("PromissoryToken");
+
+const { should, EVMThrow, getParamFromTxEvent } = require('./helpers');
+
+let crypto-blizToken = null;
+let CryptoWrapper = null;
+let promissoryToken = null;
+const WEI = 10**18;
+const emptyHash = 0xeee00000;
+let _accounts = null;
+
+const CRYPTOStages = [ "CRYPTODeployed", "CRYPTOSetUp", "CRYPTOStarted", "CRYPTOEnded", "TradingStarted" ];
+
+
+getAcutionData = async (CryptoWrapper, crypto-blizToken, accounts) => {
+
+    const CRYPTOStage =  await CryptoWrapper.stage.call();
+    const pWallet = await CryptoWrapper.pWallet.call();
+    const CRYPTOOwner =  await CryptoWrapper.owner.call();
+    const ceiling = await CryptoWrapper.ceiling.call();
+    const priceFactor = await CryptoWrapper.priceFactor.call();
+    const startBlock = await CryptoWrapper.startBlock.call();
+    const endTime = await CryptoWrapper.endTime.call();
+    const totalReceived = await CryptoWrapper.totalReceived.call();
+    const finalPrice = await CryptoWrapper.finalPrice.call();
+
+    const currentBlock = await web3.eth.getBlock('latest');
+
+    // console.log('----- CRYPTO Params ----- ');
+    // console.log('CRYPTOStage :', CRYPTOStages[CRYPTOStage] );
+    // console.log('pWallet :', pWallet );
+    // console.log('CRYPTOOwner :', CRYPTOOwner );
+    // console.log('ceiling :',  ceiling.toNumber(), web3.fromWei(ceiling.toNumber()), 'ETH' );
+    // console.log('priceFactor :', priceFactor.toNumber() );
+    // console.log('startBlock :', startBlock.toNumber() );
+    // console.log('endTime :', endTime.toNumber() );
+    // console.log('totalReceived :', totalReceived.toNumber(), web3.fromWei(totalReceived.toNumber()), 'ETH' );
+    // console.log('finalPrice :', finalPrice.toNumber(), web3.fromWei(finalPrice.toNumber()) );
+    // console.log('-----------------------------');
+
+    return  data = {
+        "stage" : CRYPTOStage,
+        "CRYPTOStage" : CRYPTOStages[CRYPTOStage],
+        "pWallet" : pWallet,
+        "CRYPTOOwner" : CRYPTOOwner,
+        "ceiling" :   web3.fromWei(ceiling.toNumber(), 'ether') ,
+        "priceFactor" : priceFactor.toNumber(),
+        "startBlock" : startBlock.toNumber(),
+        "endTime" : endTime.toNumber(),
+        "_endTime" : new Date( endTime.toNumber() * 1000),
+        "totalReceived" : ceiling.toNumber(),
+        "totalReceived_eth" : web3.fromWei(totalReceived.toNumber(), 'ether'),
+        "finalPrice" : finalPrice.toNumber(),
+        "currentTokenPrice" : (await CryptoWrapper.calcTokenPrice()).toNumber(),
+        "currentBlock" : currentBlock.number,
+        "currentBlockTimeStapm" : currentBlock.timestamp
+    }
+}
+
+
+getMyreferralTokens = async (CryptoWrapper, _address, isPartner) => {
+
+    let _hash = null;
+
+    if(isPartner) {
+        _hash = await CryptoWrapper.calculateCampaignHash(_address,   { from: _accounts[0] });
+    }else{
+        _hash = await CryptoWrapper.calculatPersonalHash({ from: _address });
+    }
+
+    let data = await CryptoWrapper.TokenReferrals.call(_hash);
+
+    return {
+        _hash : _hash,
+        hash : data[0],
+        address : data[1],
+        totalReferrals :  data[2].toNumber(),
+        totalTokensEarned : data[3].toNumber() / (10**18)
+    }
+}
+
+const forceMine = async (value, isBlock) => {
+    //value: number of seconds or blocks to advance by
+    let count = 1;
+    if (!isBlock) {
+         await web3.currentProvider.send({
+           jsonrpc: "2.0",
+           method: "evm_increaseTime",
+           params: [value],
+           id: new Date().getTime()
+         });
+     } else {
+        count = value;
+    }
+
+     for( let i=0;i<count;i++) {
+        console.log('i :', i);
+        await web3.currentProvider.send({
+           jsonrpc: "2.0",
+           method: "evm_mine",
+           id: new Date().getTime()
+        });
+    }
+}
+
+const increaseTime = function(duration) {
+  const id = Date.now()
+
+  return new Promise((resolve, reject) => {
+    web3.currentProvider.sendAsync({
+      jsonrpc: '2.0',
+      method: 'evm_increaseTime',
+      params: [duration],
+      id: id,
+    }, err1 => {
+      if (err1) return reject(err1)
+
+      web3.currentProvider.sendAsync({
+        jsonrpc: '2.0',
+        method: 'evm_mine',
+        id: id+1,
+      }, (err2, res) => {
+        return err2 ? reject(err2) : resolve(res)
+      })
+    })
+  })
+}
+
+contract('CryptoWrapper',  accounts  => {
+
+    const [owner, secondAccount, thirdAccount, referralAccount, referralAccount1, referralAccount2, seventhAccount, eighthAccount, pWalletAccount] =
+        accounts;
+
+    const sleep = ms => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    before('Setup contract for each test', async () => {
+        _accounts = accounts;
+        crypto-blizToken = await crypto-blizToken.deployed();
+        CryptoWrapper = await CryptoWrapper.deployed();
+        promissoryToken = await PromissoryToken.deployed();
+        //await CryptoWrapper.setPromissoryTokenInstance(promissoryToken.address);
+        accounts_num = accounts.length;
+    })
+
+    it('CryptoWrapper setup Partners Referral & Bid', async () => {
+
+        const campaingAccount = accounts[10];
+        const cmpaignHash = await CryptoWrapper.calculateCampaignHash(campaingAccount, { from: owner });
+
+        console.log('Account 10 campaign hash : ', cmpaignHash);
+
+        //-- address _addr, uint _percentage, uint _type, uint _tokenAmt, uint _numUsers
+        await CryptoWrapper.setupReferal(campaingAccount, 10, { from: owner });
+        let claimedTokenReferral = (await CryptoWrapper.claimedTokenReferral()).toNumber();
+
+        // -- bidReferral
+        await CryptoWrapper.bidReferral(accounts[11], cmpaignHash , {from : accounts[11], value : web3.toWei('1', 'ether') } );
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[11], false) ).totalTokensEarned, 30  );
+
+        claimedTokenReferral = (await CryptoWrapper.claimedTokenReferral()).toNumber();
+
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[10], true)).totalReferrals, 1  );
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[10], true)).totalTokensEarned, 100  );
+
+        await CryptoWrapper.bidReferral(accounts[11], cmpaignHash , {from : accounts[11], value : web3.toWei('2', 'ether') } );
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[11], false) ).totalTokensEarned, 60  );
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[10], true)).totalTokensEarned, 200  );
+
+        await CryptoWrapper.bidReferral(accounts[11], cmpaignHash , {from : accounts[11], value : web3.toWei('4', 'ether') } );
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[11], false) ).totalTokensEarned, 260  );
+
+        await CryptoWrapper.bidReferral(accounts[12], cmpaignHash , {from : accounts[12], value : web3.toWei('50', 'ether') } );
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[12], false) ).totalTokensEarned, 600 );
+
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[10], true)).totalReferrals, 4  );
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[10], true)).totalTokensEarned, (100 + 100 + 500 + 1000)  );
+
+        let marketingPartnersMap = await CryptoWrapper.MarketingPartners.call(cmpaignHash);
+
+        console.log('Campaigns Earned : ');
+        console.log(marketingPartnersMap);
+
+    });
+
+
+
+    let campaignreferrals = [];
+    let referralBidders  = [];
+
+    it('Should sign up for referral and Bid for accounts', async () => {
+
+        for(let i = 130; i < 190; i ++ ) {
+            let _account = accounts[i];
+            await CryptoWrapper.referralSignup({ from: _account });
+            let _bidderhash = await CryptoWrapper.calculatPersonalHash({ from: accounts[i] })
+            bidAmount = web3.toWei('10', 'ether');
+            await CryptoWrapper.bidReferral(_account,  _bidderhash, { from : _account, value: bidAmount });
+        }
+
+    })
+
+    it('Print Top 20 ', async () => {
+
+        var top20 = await CryptoWrapper.getTop20Reffered();
+
+        for (var i = 0; i < top20.length; i++) {
+            //console.log("Numbers=",top20[i].toNumber());
+            var asf= await CryptoWrapper.topReferredNum(i);
+            var asf2= await CryptoWrapper.topAddrHashes(i);
+            //console.log("Top20 Num=",asf.toNumber(),asf2);
+         }
+    })
+
+    it('Should sign up for referral and Bid for accounts : 14 - 29 : ', async () => {
+
+        // Refferral signup
+        const tokenreferralAccount = accounts[13];
+        await CryptoWrapper.referralSignup({ from: tokenreferralAccount });
+        //let _hash = await CryptoWrapper.calculatPersonalHash.call({ from: accounts[13] });
+
+        let _hash =  await CryptoWrapper.calculatPersonalHash.call({ from : tokenreferralAccount });
+        let tokenReferralsMap = await getMyreferralTokens(CryptoWrapper, tokenreferralAccount, false);
+
+        console.log('---------------------------------');
+        console.log(' REFFREALS MAP ');
+        console.log(tokenReferralsMap)
+        console.log('---------------------------------');
+
+        assert.equal(tokenReferralsMap.hash , _hash);
+        assert.equal(tokenReferralsMap.address, tokenreferralAccount);
+        assert.equal(tokenReferralsMap.totalReferrals, 0);
+        assert.equal(tokenReferralsMap.totalTokensEarned, 0);
+
+        let tokensEarned = 0;
+        let totalReferrals = 0
+
+
+        for(let i = 14; i < 39; i ++ ) {
+
+            let _account = accounts[i];
+
+            console.log('N: ', i, 'account', _account);
+
+            let _bidderhash = await CryptoWrapper.calculatPersonalHash({ from: accounts[i] });
+
+            // bid 0.9 ether
+            let bidAmount = web3.toWei('0.9', 'ether');
+            CryptoWrapper.bidReferral( _account, _hash, { from : _account, value: bidAmount });
+
+            tokenReferralsMap = await getMyreferralTokens(CryptoWrapper, tokenreferralAccount, false);
+            accountTokeReferralsMap = await getMyreferralTokens(CryptoWrapper, _account, false);
+
+            assert.equal( accountTokeReferralsMap.totalTokensEarned, 0)
+            assert.equal(tokenReferralsMap.totalReferrals, totalReferrals);
+            // assert.equal(tokenReferralsMap.totalTokensEarned, tokensEarned);
+
+            // Bid 1 ether
+            bidAmount = web3.toWei('1', 'ether');
+            await CryptoWrapper.bidReferral(_account,  _hash, { from : _account, value: bidAmount });
+
+            tokensEarned += 100;
+            totalReferrals += 1;
+
+            accountTokeReferralsMap = await getMyreferralTokens(CryptoWrapper, _account, false);
+            tokenReferralsMap = await getMyreferralTokens(CryptoWrapper, tokenreferralAccount, false);
+
+            assert.equal( accountTokeReferralsMap.totalTokensEarned, 30)
+            assert.equal(tokenReferralsMap.totalReferrals, totalReferrals);
+
+            // Bid 4 ether
+            bidAmount = web3.toWei('4', 'ether');
+            await CryptoWrapper.bidReferral(_account,  _hash, { from : _account, value: bidAmount });
+
+            tokensEarned += 500;
+            totalReferrals += 1;
+
+            accountTokeReferralsMap = await getMyreferralTokens(CryptoWrapper, _account, false);
+            tokenReferralsMap = await getMyreferralTokens(CryptoWrapper, tokenreferralAccount, false);
+            assert.equal( accountTokeReferralsMap.totalTokensEarned, 30 + 200);
+            assert.equal(tokenReferralsMap.totalReferrals, totalReferrals);
+
+            // Bid 8 ether
+            bidAmount = web3.toWei('8', 'ether');
+            await CryptoWrapper.bidReferral(_account,  _hash, { from : _account, value: bidAmount });
+
+            tokensEarned += 1000;
+            totalReferrals += 1;
+
+            accountTokeReferralsMap = await getMyreferralTokens(CryptoWrapper, _account, false);
+            tokenReferralsMap = await getMyreferralTokens(CryptoWrapper, tokenreferralAccount, false);
+
+            assert.equal( accountTokeReferralsMap.totalTokensEarned, 30 + 200 + 600);
+            assert.equal(tokenReferralsMap.totalReferrals, totalReferrals);
+            assert.equal(tokenReferralsMap.totalTokensEarned, tokensEarned);
+
+            // console.log('account tokens : ');
+            // console.log(accountTokeReferralsMap);
+
+            // console.log(tokenReferralsMap);
+            // console.log('------------------------------');
+            // console.log("tokensEarned : ", tokensEarned);
+            // console.log('------------------------------');
+
+            referralBidders.push({
+                account : _account,
+                hash : _bidderhash,
+                totalReferrals : totalReferrals
+            })
+        }
+
+        campaignreferrals.push({
+            account :  tokenreferralAccount,
+            hash : _hash,
+            tokensEarned : tokensEarned,
+        })
+
+    })
+
+
+    it('Finalize CRYPTO  & start Trading', async () => {
+
+        for (let i = 50; i < 90; i++) {
+            try {
+                await CryptoWrapper.bid(accounts[i], { from: accounts[i], value: 250*10**18});
+                assert.isNotOk(true, 'Expected function to fail');
+            } catch(e) {
+                assert.exists(e, 'Expected error to exist from throw');
+            };
+        }
+        val = await CryptoWrapper.stage();
+
+        try {
+            await CryptoWrapper.bid(accounts[95], { from: accounts[95], value: 10*10**18});
+            assert.isNotOk(true, 'Expected function to fail');
+        } catch(e) {
+            assert.exists(e, 'Expected error to exist from throw');
+        };
+
+        await increaseTime( 86400 * 55 );
+        await CryptoWrapper.updateStage({ from : accounts[0] });
+        await sleep(2000);
+
+        const state = await getAcutionData(CryptoWrapper, crypto-blizToken, accounts);
+        assert.equal(state.stage , 4, 'CRYPTO stage should be 4: CRYPTO started' );
+
+        // console.log('---- CONTRACT STATE ----');
+        // console.log('CRYPTO Stage :',  state );
+        // console.log('---- CONTRACT STATE ----');
+
+    });
+
+    it('ClaimtokenBonus for campaign Account 10 : ', async () => {
+
+        const account10Campaignhash = await CryptoWrapper.calculateCampaignHash(accounts[10], { from: owner });
+        const data = await getMyreferralTokens(CryptoWrapper, accounts[10], true);
+        assert.equal( (await getMyreferralTokens(CryptoWrapper, accounts[10], true)).totalTokensEarned, (100 + 100 + 500 + 1000)  );
+        const claimCampaignTokenBonusStatus = await CryptoWrapper.claimCampaignTokenBonus(account10Campaignhash, { from: accounts[10] } );
+        assert.equal( (await crypto-blizToken.balanceOf(accounts[10])).toNumber(),  (100 + 100 + 500 + 1000) * 10 ** 18);
+
+    });
+
+    it('Claim Token Bonus for bidder Account 11  : ', async () => {
+        // accounts[11]  accounts[12]  accounts[13]
+        const data = (await getMyreferralTokens(CryptoWrapper, accounts[11], false));
+        await CryptoWrapper.claimtokenBonus({ from: accounts[11] } );
+        assert.equal( (await crypto-blizToken.balanceOf(accounts[11])).toNumber(), data.totalTokensEarned * 10 ** 18);
+        const rerequest = await CryptoWrapper.claimtokenBonus({ from: accounts[11] } );
+        assert.equal((await getMyreferralTokens(CryptoWrapper, accounts[11], false)).totalTokensEarned, 0);
+
+    });
+
+    it('Claim token Bonus for bidder Account 12  : ', async () => {
+        const account = accounts[12];
+        const data = (await getMyreferralTokens(CryptoWrapper, account, false));
+        await CryptoWrapper.claimtokenBonus({ from: account } );
+        assert.equal( (await crypto-blizToken.balanceOf(account)).toNumber(), data.totalTokensEarned * 10 ** 18);
+        const rerequest = await CryptoWrapper.claimtokenBonus({ from: account } );
+        assert.equal((await getMyreferralTokens(CryptoWrapper, account, false)).totalTokensEarned, 0);
+    });
+
+    it('Should claim referral tokens for bidders 14 - 29  : ', async () => {
+
+        for(let i = 0; i < referralBidders.length; i ++ ) {
+            const account = referralBidders[i].account;
+            const data = await getMyreferralTokens(CryptoWrapper, account, false);
+            referralBidders[i]["bonusTokens"] = data.totalTokensEarned;
+            await CryptoWrapper.claimtokenBonus({ from: account } );
+            assert.equal( (await crypto-blizToken.balanceOf(account)).toNumber(), data.totalTokensEarned * 10 ** 18);
+            await CryptoWrapper.claimtokenBonus({ from: account } );
+            assert.equal((await getMyreferralTokens(CryptoWrapper, account, false)).totalTokensEarned, 0);
+        }
+
+    });
+
+    it('Should claim bid tokens for bidders 14 - 29 :' , async () => {
+
+        for(let i = 0; i < referralBidders.length; i ++ ) {
+
+            const account = referralBidders[i].account;
+            let startBalance = (await crypto-blizToken.balanceOf(account)).toNumber();
+            //console.log('Biider Balance before claim ', account, '_hash :',    startBalance);
+            await CryptoWrapper.claimTokens(account, { from: account } );
+            let endbalance = (await crypto-blizToken.balanceOf(account)).toNumber();
+            assert.isAbove(endbalance, startBalance, 'Token balance should changed ');
+            await CryptoWrapper.claimTokens(account, { from: account } );
+            let currentBalance = (await crypto-blizToken.balanceOf(account)).toNumber();
+            assert.equal(endbalance, currentBalance, 'No additionoal tokens to claim');
+        }
+    })
+
+
+    it('Shoudl cliam tonens for Accounts 50-90 : ', async () => {
+
+        const bidsByAccount =  await CryptoWrapper.bids.call(accounts[10]);
+        console.log('bidsByAccount 10 : ', bidsByAccount)
+
+        for (let i = 50; i < 90; i++ ) {
+
+            const account = accounts[i];
+            let startBalance = (await crypto-blizToken.balanceOf(account)).toNumber();
+            assert.equal(startBalance, 0, 'Start balance is 0 ');
+            //console.log('Biider before claim ',  account, startBalance);
+            await CryptoWrapper.claimTokens(account, { from: account } );
+            let endbalance = (await crypto-blizToken.balanceOf(account)).toNumber();
+
+            // console.log('endbalance :', endbalance)
+            // console.log('------');
+            // assert.isAbove(endbalance, startBalance, 'Token balance should changed ');
+            // await CryptoWrapper.claimTokens(account, { from: account } );
+            // let currentBalance = (await crypto-blizToken.balanceOf(account)).toNumber();
+            // assert.equal(endbalance, currentBalance, 'No additionoal tokens to claim');
+        }
+    });
+
+
+    it('Should check Softcap === true', async () => {
+
+        const softcapReached = await CryptoWrapper.softcapReached();
+        const totalReceived = await CryptoWrapper.totalReceived();
+
+        console.log('softcapReached : ', softcapReached);
+        console.log('totalReceived : ', web3.fromWei(totalReceived.toNumber(), 'ether') );
+        assert.equal(softcapReached, true);
+    });
+
+    it('Should print correct getTop20Reffered ', async () => {
+
+        const top20Reffered = await CryptoWrapper.getTop20Reffered();
+        const top20Addr = await CryptoWrapper.getTop20Addr();
+
+        let top20List = [];
+
+        for(let i=0; i < top20Reffered.length; i++ ){
+            top20List.push({
+                hash : top20Addr[i],
+                number :  top20Reffered[i].toNumber()
+            })
+        }
+
+        console.log('----');
+        console.log(top20List);
+
+        assert.equal(top20List.length, 20);
+        // Account13 hash (Should be a top 1 )
+        let _account13Hash =  await CryptoWrapper.calculatPersonalHash.call({ from : accounts[13] });
+        assert.equal( top20List[0].hash, _account13Hash);
+
+    });
+
+
+    it.skip('Shoudl claim bonus tokens for campaign Account', async () => {
+
+        const campaignAccount = campaignreferrals[0].account;
+        const totalTokensEarned = campaignreferrals[0].tokensEarned;
+        const data = await getMyreferralTokens(CryptoWrapper, campaignAccount, false);
+        
+        // assert.equal(data.totalTokensEarned, totalTokensEarned);
+        // await CryptoWrapper.ClaimtokenBonus(hash, { from: campaignAccount } );
+        // let endbalance = (await crypto-blizToken.balanceOf(campaignAccount)).toNumber();
+        // console.log('endbalance : ', endbalance);
+        // assert.equal(totalTokensEarned, endbalance / (10**18) );
+    })
+
+});

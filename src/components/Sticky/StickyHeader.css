@@ -1,0 +1,135 @@
+.network-banner--warning {
+    background: #ff3232 !important;
+    width: 100%;
+    color: white;
+    text-align: center;
+}
+
+.cell {
+    background-color: #59b7eb !important;
+}
+.stickyImage {
+    width: 80px;
+}
+
+.stikytext {
+   margin-top: 15px !important;
+   margin-bottom: 4px !important;
+   font-size: 14px;
+   text-align: center;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.placeholder {
+    width: 100px;
+    height: auto;
+    padding: 5px;
+}
+
+.top_div_hidden {
+    display: none;
+    opacity: 0; 
+    /* visibility: none; */
+}
+
+
+.price {
+    color:yellow !important;
+}
+
+.top_div_active {
+    position: fixed;
+    top:0; 
+    left:0;
+    padding: 5px;
+    width: 100%; 
+    z-index:2000;  
+    opacity:1;
+    transition: opacity 2s;
+    -webkit-transition: opacity 2s; /* Safari */
+
+    border-bottom:1px solid #E9EBF8; 
+    background: #302C64;  
+    color: #fff;
+}
+
+
+.hidden {
+   /* display: none; */
+    transition: opacity 4s ease-out;
+    opacity: 0; 
+    height: -1; 
+    overflow: hidden;
+}
+
+.stickyHeader	{ 
+	border-bottom:1px solid #E9EBF8; 
+    background: #302C64;  
+    color: #fff;
+    padding-top: 10px;
+    padding-bottom: 10px;
+	/* padding:10px 40px;  */
+	position:fixed;
+	top:0; 
+	left:0; 
+	z-index:2000; 
+    width:100%;
+    opacity: 0.9;
+}
+
+.small  * {
+    height: 50px;
+}
+
+
+.anchoButton {
+    margin-top: 12px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0.25rem;
+    background: linear-gradient(90deg, #59b7eb, #8761d0);
+}
+
+
+
+.stickyButton button {
+    margin-top: 12px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0.25rem;
+    background: linear-gradient(90deg, #59b7eb, #8761d0);
+}
+
+.stickyMobile button {
+    margin-top: 10px;
+    width: 100%;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0.25rem;
+    background: linear-gradient(90deg, #59b7eb, #8761d0);
+}

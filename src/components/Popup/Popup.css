@@ -1,0 +1,14 @@
+
+.discorbutton {
+    width: 100%;
+    font-size: 25px;
+    font-weight: bold;
+    padding: 15px;
+    color: #fff;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0.25rem;
+    background: linear-gradient(90deg, #59b7eb, #8761d0);
+}

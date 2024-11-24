@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home - crypto-blizs</title>
+    <meta name="description" content="crypto-blizs Network Launch" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="font/exo.css" />
+    <link rel="stylesheet" href="font/lato.css" />
+    <link rel="stylesheet" href="css/animate.min.css" />
+    <link rel="stylesheet" href="css/slick.css" />
+    <link rel="stylesheet" href="css/bundle.css" />
+</head>
+
+<body>
+    <header id="main-header">
+        <div class="container-fluid header">
+            <div class="title text-center">
+                <h2>
+                    <span class="name">crypto-bliz</span> Fight Paper
+                </h2>
+            </div>
+        </div>
+        <div class="wavy-bg">
+            <img src="img/wavy-background.png" alt="">
+        </div>
+    </header>
+
+    <main>
+      <section id="paper">
+          <div class="container-fluid">
+            <div class="row">
+                <div class="offset-2 home-link">
+                  <a href="/" class="btn-g">HOME</a>
+                </div>
+            </div>
+            <div class="row">
+              <div class="offset-md-2 col-md-8 paper-container">
+                  <div id="fight-paper-pdf"></div>
+                </div>
+              </div>
+          </div>
+      </section>
+    </main>
+
+    <footer id="main-footer">
+        <div class="container">
+            <h6 class="social-icons-title my-3">Follow crypto-bliz
+                <span>on social media</span>
+            </h6>
+            <ul class="social-icons-list">
+                <li class="">
+                    <a href="#">
+                        <img src="img/social-facebook.png" />
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#">
+                        <img src="img/social-twitter.png" />
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#">
+                        <img src="img/social-1.png" />
+                    </a>
+                </li>
+                <li class="">
+                    <a href="#">
+                        <img src="img/social-2.png" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bundle.js"></script>
+    <script src="js/pdfobject.min.js"></script>
+    <script>
+      PDFObject.embed("pdf/paper.pdf", "#fight-paper-pdf");
+    </script>
+</body>
+
+</html>

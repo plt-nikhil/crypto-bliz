@@ -1,0 +1,277 @@
+{
+  "contractName": "PromissoryToken",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "lastPrice",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[],\"name\":\"lastPrice\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/PromissoryToken.sol\":\"PromissoryToken\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/PromissoryToken.sol\":{\"keccak256\":\"0x4f5b82cbef9402aae59220cb96bc60b1f310b49e57549cf00e7746e1105d0be1\",\"urls\":[\"bzzr://adc78760faae1e2f63e86bd6090579a0242a88db64c02400b5a961bf3a3eff24\",\"dweb:/ipfs/Qma8PVqBJwm5kmHQPP3m2H9HpYC5rku82UxxCEn8msKjJP\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b5060858061001e6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063053f14da14602d575b600080fd5b60336045565b60408051918252519081900360200190f35b66a56bac75133c008156fea265627a7a72305820d8587b87e9edf488302f257403118c83f12e189342b73d75e0d023e94290670f64736f6c634300050a0032",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063053f14da14602d575b600080fd5b60336045565b60408051918252519081900360200190f35b66a56bac75133c008156fea265627a7a72305820d8587b87e9edf488302f257403118c83f12e189342b73d75e0d023e94290670f64736f6c634300050a0032",
+  "sourceMap": "26:113:10:-;;;111:26;8:9:-1;5:2;;;30:1;27;20:12;5:2;111:26:10;26:113;;;;;;",
+  "deployedSourceMap": "26:113:10:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:113:10;;;;;;;;;;;;;;;;;;;56:50;;;:::i;:::-;;;;;;;;;;;;;;;;;89:17;56:50;:::o",
+  "source": "pragma solidity ^0.5.10;\n\ncontract PromissoryToken  {\n\n\tuint constant public lastPrice = 46561759600000000;\n\t\n\tconstructor() public {\n\n\t}\n}\n",
+  "sourcePath": "D:/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/PromissoryToken.sol",
+  "ast": {
+    "absolutePath": "/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/PromissoryToken.sol",
+    "exportedSymbols": {
+      "PromissoryToken": [
+        3959
+      ]
+    },
+    "id": 3960,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3951,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:10"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3959,
+        "linearizedBaseContracts": [
+          3959
+        ],
+        "name": "PromissoryToken",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 3954,
+            "name": "lastPrice",
+            "nodeType": "VariableDeclaration",
+            "scope": 3959,
+            "src": "56:50:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 3952,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "56:4:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "3436353631373539363030303030303030",
+              "id": 3953,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "89:17:10",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_46561759600000000_by_1",
+                "typeString": "int_const 46561759600000000"
+              },
+              "value": "46561759600000000"
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 3957,
+              "nodeType": "Block",
+              "src": "132:5:10",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 3958,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3955,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "122:2:10"
+            },
+            "returnParameters": {
+              "id": 3956,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "132:0:10"
+            },
+            "scope": 3959,
+            "src": "111:26:10",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3960,
+        "src": "26:113:10"
+      }
+    ],
+    "src": "0:140:10"
+  },
+  "legacyAST": {
+    "absolutePath": "/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/PromissoryToken.sol",
+    "exportedSymbols": {
+      "PromissoryToken": [
+        3959
+      ]
+    },
+    "id": 3960,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 3951,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:10"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 3959,
+        "linearizedBaseContracts": [
+          3959
+        ],
+        "name": "PromissoryToken",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": true,
+            "id": 3954,
+            "name": "lastPrice",
+            "nodeType": "VariableDeclaration",
+            "scope": 3959,
+            "src": "56:50:10",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 3952,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "56:4:10",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": {
+              "argumentTypes": null,
+              "hexValue": "3436353631373539363030303030303030",
+              "id": 3953,
+              "isConstant": false,
+              "isLValue": false,
+              "isPure": true,
+              "kind": "number",
+              "lValueRequested": false,
+              "nodeType": "Literal",
+              "src": "89:17:10",
+              "subdenomination": null,
+              "typeDescriptions": {
+                "typeIdentifier": "t_rational_46561759600000000_by_1",
+                "typeString": "int_const 46561759600000000"
+              },
+              "value": "46561759600000000"
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 3957,
+              "nodeType": "Block",
+              "src": "132:5:10",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 3958,
+            "implemented": true,
+            "kind": "constructor",
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 3955,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "122:2:10"
+            },
+            "returnParameters": {
+              "id": 3956,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "132:0:10"
+            },
+            "scope": 3959,
+            "src": "111:26:10",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 3960,
+        "src": "26:113:10"
+      }
+    ],
+    "src": "0:140:10"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2019-07-27T02:38:41.206Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

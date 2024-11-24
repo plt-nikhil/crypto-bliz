@@ -1,0 +1,692 @@
+{
+  "contractName": "HasNoTokens",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "token",
+          "type": "address"
+        }
+      ],
+      "name": "reclaimToken",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "from_",
+          "type": "address"
+        },
+        {
+          "name": "value_",
+          "type": "uint256"
+        },
+        {
+          "name": "data_",
+          "type": "bytes"
+        }
+      ],
+      "name": "tokenFallback",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.10+commit.5a6ea5b1\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"token\",\"type\":\"address\"}],\"name\":\"reclaimToken\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"from_\",\"type\":\"address\"},{\"name\":\"value_\",\"type\":\"uint256\"},{\"name\":\"data_\",\"type\":\"bytes\"}],\"name\":\"tokenFallback\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"}],\"devdoc\":{\"author\":\"Remco Bloemen <remco@2\\u03c0.com>\",\"details\":\"This blocks incoming ERC223 tokens to prevent accidental loss of tokens. Should tokens (any ERC20Basic compatible) end up in the contract, it allows the owner to reclaim the tokens.\",\"methods\":{\"reclaimToken(address)\":{\"details\":\"Reclaim all ERC20Basic compatible tokens\",\"params\":{\"token\":\"ERC20Basic The address of the token contract\"}},\"tokenFallback(address,uint256,bytes)\":{\"details\":\"Reject all ERC223 compatible tokens\",\"params\":{\"data_\":\"Bytes The data passed from the caller.\",\"from_\":\"address The address that is transferring the tokens\",\"value_\":\"uint256 the amount of the specified token\"}},\"transferOwnership(address)\":{\"details\":\"Allows the current owner to transfer control of the contract to a newOwner.\",\"params\":{\"newOwner\":\"The address to transfer ownership to.\"}}},\"title\":\"Contracts that should not own Tokens\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/ownership/HasNoTokens.sol\":\"HasNoTokens\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/ownership/CanReclaimToken.sol\":{\"keccak256\":\"0xf8095a46424ae3c81dc0798c860acee2bc9f6bdfa7aab8afa1d9505662e9de8b\",\"urls\":[\"bzzr://00906803746ad862cf014c5f4fdee0208a36afe7f45d87188a943f4dc9d32eba\",\"dweb:/ipfs/QmeYddgpHZfJ8f2LodPmD1jkaMGXyg98LfyaKfrVzgEbws\"]},\"/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/ownership/HasNoTokens.sol\":{\"keccak256\":\"0xf9da9d6e9a95a10310e448d724355fe3ecb4bf3ad7298964b2f74cc83272b6bb\",\"urls\":[\"bzzr://b984c00a9c87a69091266f692c7b45325c9dd17087cf2730af1b39c3dd81789d\",\"dweb:/ipfs/QmVdrLf9e3TLutomHzxaAMrTEXke4AEbA7wvgwTdARsjsN\"]},\"/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/ownership/Ownable.sol\":{\"keccak256\":\"0x451fdd4ecdc32705d9a22aca5c5b053f0fbb078471786b1a373d8f4ed420b219\",\"urls\":[\"bzzr://dd16a1f2abc8f3fa3b425dfa859534141a4d7953ddccbb978b454718e629393e\",\"dweb:/ipfs/QmNyNSxT9BhGXhbC9nFJWzCnbWWttnDEZrrCUJb4puT95D\"]},\"/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/token/ERC20/ERC20.sol\":{\"keccak256\":\"0x2bcead6c923e31970542eb5b53e85fb08176fdd57011b2e8cc59346e273961b7\",\"urls\":[\"bzzr://2c133534a6289b249655dc0331fb66db3f399dcff755230abdc05f995756cc46\",\"dweb:/ipfs/QmQ6qKdV9feN8e3MNKv11xW6Ag8x3EnuGKpfJEiD4X2rMy\"]},\"/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/token/ERC20/ERC20Basic.sol\":{\"keccak256\":\"0x704ecb8f5b24eeb8c8169bbcb78645f4b39629e7da0b85622aaa0264d1f30b3d\",\"urls\":[\"bzzr://4c90d73f7cb5a6672323008198a418e71e0a3580c5006f49895d2088bee6d509\",\"dweb:/ipfs/QmecUGSVjoxpdXif2xjewaNnihiLFxiw8RBq4BAdDe3eBL\"]},\"/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/token/ERC20/SafeERC20.sol\":{\"keccak256\":\"0x7dc9b65eafb796749aa085bc84931ce1346fd2d3489c6e3b1486207835cb3f4c\",\"urls\":[\"bzzr://91793dc029489287fdf366a5c01f09d6e6b5ce3a1a475b893610c6f5b992d14d\",\"dweb:/ipfs/QmSUhtjsQk8tP7pzxVn6zmmoL6hprLKWxY22GEs5cCLVPZ\"]}},\"version\":1}",
+  "bytecode": "0x6080604052600080546001600160a01b0319163317905561035c806100256000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c806317ffc320146100515780638da5cb5b14610079578063c0ee0b8a1461009d578063f2fde38b14610122575b600080fd5b6100776004803603602081101561006757600080fd5b50356001600160a01b0316610148565b005b6100816101fc565b604080516001600160a01b039092168252519081900360200190f35b610077600480360360608110156100b357600080fd5b6001600160a01b03823516916020810135918101906060810160408201356401000000008111156100e357600080fd5b8201836020820111156100f557600080fd5b8035906020019184600183028401116401000000008311171561011757600080fd5b50909250905061004c565b6100776004803603602081101561013857600080fd5b50356001600160a01b031661020b565b6000546001600160a01b0316331461015f57600080fd5b604080516370a0823160e01b815230600482015290516000916001600160a01b038416916370a0823191602480820192602092909190829003018186803b1580156101a957600080fd5b505afa1580156101bd573d6000803e3d6000fd5b505050506040513d60208110156101d357600080fd5b50516000549091506101f8906001600160a01b0384811691168363ffffffff61029016565b5050565b6000546001600160a01b031681565b6000546001600160a01b0316331461022257600080fd5b6001600160a01b03811661023557600080fd5b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b826001600160a01b031663a9059cbb83836040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b1580156102f057600080fd5b505af1158015610304573d6000803e3d6000fd5b505050506040513d602081101561031a57600080fd5b505161032257fe5b50505056fea265627a7a72305820c10acb7233e86b20c8bc0dd7d0f0686c40ecdac25ef535e6a0fa110b07a9b1c564736f6c634300050a0032",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061004c5760003560e01c806317ffc320146100515780638da5cb5b14610079578063c0ee0b8a1461009d578063f2fde38b14610122575b600080fd5b6100776004803603602081101561006757600080fd5b50356001600160a01b0316610148565b005b6100816101fc565b604080516001600160a01b039092168252519081900360200190f35b610077600480360360608110156100b357600080fd5b6001600160a01b03823516916020810135918101906060810160408201356401000000008111156100e357600080fd5b8201836020820111156100f557600080fd5b8035906020019184600183028401116401000000008311171561011757600080fd5b50909250905061004c565b6100776004803603602081101561013857600080fd5b50356001600160a01b031661020b565b6000546001600160a01b0316331461015f57600080fd5b604080516370a0823160e01b815230600482015290516000916001600160a01b038416916370a0823191602480820192602092909190829003018186803b1580156101a957600080fd5b505afa1580156101bd573d6000803e3d6000fd5b505050506040513d60208110156101d357600080fd5b50516000549091506101f8906001600160a01b0384811691168363ffffffff61029016565b5050565b6000546001600160a01b031681565b6000546001600160a01b0316331461022257600080fd5b6001600160a01b03811661023557600080fd5b600080546040516001600160a01b03808516939216917f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e091a3600080546001600160a01b0319166001600160a01b0392909216919091179055565b826001600160a01b031663a9059cbb83836040518363ffffffff1660e01b815260040180836001600160a01b03166001600160a01b0316815260200182815260200192505050602060405180830381600087803b1580156102f057600080fd5b505af1158015610304573d6000803e3d6000fd5b505050506040513d602081101561031a57600080fd5b505161032257fe5b50505056fea265627a7a72305820c10acb7233e86b20c8bc0dd7d0f0686c40ecdac25ef535e6a0fa110b07a9b1c564736f6c634300050a0032",
+  "sourceMap": "352:431:27:-;;;496:5:30;:18;;-1:-1:-1;;;;;;496:18:30;504:10;496:18;;;352:431:27;;;;;;",
+  "deployedSourceMap": "352:431:27:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;352:431:27;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;598:158:21;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;598:158:21;-1:-1:-1;;;;;598:158:21;;:::i;:::-;;238:20:30;;;:::i;:::-;;;;-1:-1:-1;;;;;238:20:30;;;;;;;;;;;;;;637:143:27;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;;;;;637:143:27;;;;;;;;;;;;;;;;;;;21:11:-1;5:28;;2:2;;;46:1;43;36:12;2:2;637:143:27;;35:9:-1;28:4;12:14;8:25;5:40;2:2;;;58:1;55;48:12;2:2;637:143:27;;;;;;100:9:-1;95:1;81:12;77:20;67:8;63:35;60:50;39:11;25:12;22:29;11:107;8:2;;;131:1;128;121:12;8:2;-1:-1;637:143:27;;-1:-1:-1;637:143:27;-1:-1:-1;637:143:27;:::i;827:174:30:-;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;827:174:30;-1:-1:-1;;;;;827:174:30;;:::i;598:158:21:-;648:5:30;;-1:-1:-1;;;;;648:5:30;634:10;:19;626:28;;;;;;681:30:21;;;-1:-1:-1;;;681:30:21;;705:4;681:30;;;;;;663:15;;-1:-1:-1;;;;;681:15:21;;;;;:30;;;;;;;;;;;;;;;:15;:30;;;5:2:-1;;;;30:1;27;20:12;5:2;681:30:21;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;681:30:21;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;681:30:21;736:5;;681:30;;-1:-1:-1;717:34:21;;-1:-1:-1;;;;;717:18:21;;;;736:5;681:30;717:34;:18;:34;:::i;:::-;660:1:30;598:158:21;:::o;238:20:30:-;;;-1:-1:-1;;;;;238:20:30;;:::o;827:174::-;648:5;;-1:-1:-1;;;;;648:5:30;634:10;:19;626:28;;;;;;-1:-1:-1;;;;;903:22:30;;895:31;;;;;;958:5;;;937:37;;-1:-1:-1;;;;;937:37:30;;;;958:5;;;937:37;;;980:5;:16;;-1:-1:-1;;;;;;980:16:30;-1:-1:-1;;;;;980:16:30;;;;;;;;;;827:174::o;368:120:41:-;457:5;-1:-1:-1;;;;;457:14:41;;472:2;476:5;457:25;;;;;;;;;;;;;-1:-1:-1;;;;;457:25:41;-1:-1:-1;;;;;457:25:41;;;;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;457:25:41;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;457:25:41;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;-1:-1;457:25:41;450:33;;;;368:120;;;:::o",
+  "source": "pragma solidity ^0.5.10;\n\nimport \"./CanReclaimToken.sol\";\n\n\n/**\n * @title Contracts that should not own Tokens\n * @author Remco Bloemen <remco@2π.com>\n * @dev This blocks incoming ERC223 tokens to prevent accidental loss of tokens.\n * Should tokens (any ERC20Basic compatible) end up in the contract, it allows the\n * owner to reclaim the tokens.\n */\ncontract HasNoTokens is CanReclaimToken {\n\n /**\n  * @dev Reject all ERC223 compatible tokens\n  * @param from_ address The address that is transferring the tokens\n  * @param value_ uint256 the amount of the specified token\n  * @param data_ Bytes The data passed from the caller.\n  */\n  function tokenFallback(address from_, uint256 value_, bytes calldata data_) pure external {\n    from_;\n    value_;\n    data_;\n    revert();\n  }\n\n}\n",
+  "sourcePath": "D:\\projects\\ethereum\\crypto-bliz\\token\\crypto-bliz\\contracts\\openzeppelin-solidity\\ownership\\HasNoTokens.sol",
+  "ast": {
+    "absolutePath": "/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/ownership/HasNoTokens.sol",
+    "exportedSymbols": {
+      "HasNoTokens": [
+        9394
+      ]
+    },
+    "id": 9395,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 9371,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:27"
+      },
+      {
+        "absolutePath": "/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/ownership/CanReclaimToken.sol",
+        "file": "./CanReclaimToken.sol",
+        "id": 9372,
+        "nodeType": "ImportDirective",
+        "scope": 9395,
+        "sourceUnit": 9158,
+        "src": "26:31:27",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 9373,
+              "name": "CanReclaimToken",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 9157,
+              "src": "376:15:27",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_CanReclaimToken_$9157",
+                "typeString": "contract CanReclaimToken"
+              }
+            },
+            "id": 9374,
+            "nodeType": "InheritanceSpecifier",
+            "src": "376:15:27"
+          }
+        ],
+        "contractDependencies": [
+          9157,
+          9660
+        ],
+        "contractKind": "contract",
+        "documentation": "@title Contracts that should not own Tokens\n@author Remco Bloemen <remco@2π.com>\n@dev This blocks incoming ERC223 tokens to prevent accidental loss of tokens.\nShould tokens (any ERC20Basic compatible) end up in the contract, it allows the\nowner to reclaim the tokens.",
+        "fullyImplemented": true,
+        "id": 9394,
+        "linearizedBaseContracts": [
+          9394,
+          9157,
+          9660
+        ],
+        "name": "HasNoTokens",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 9392,
+              "nodeType": "Block",
+              "src": "727:53:27",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 9383,
+                    "name": "from_",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 9376,
+                    "src": "733:5:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 9384,
+                  "nodeType": "ExpressionStatement",
+                  "src": "733:5:27"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 9385,
+                    "name": "value_",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 9378,
+                    "src": "744:6:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 9386,
+                  "nodeType": "ExpressionStatement",
+                  "src": "744:6:27"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 9387,
+                    "name": "data_",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 9380,
+                    "src": "756:5:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_calldata_ptr",
+                      "typeString": "bytes calldata"
+                    }
+                  },
+                  "id": 9388,
+                  "nodeType": "ExpressionStatement",
+                  "src": "756:5:27"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 9389,
+                      "name": "revert",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        11078,
+                        11079
+                      ],
+                      "referencedDeclaration": 11078,
+                      "src": "767:6:27",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_revert_pure$__$returns$__$",
+                        "typeString": "function () pure"
+                      }
+                    },
+                    "id": 9390,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "767:8:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 9391,
+                  "nodeType": "ExpressionStatement",
+                  "src": "767:8:27"
+                }
+              ]
+            },
+            "documentation": "@dev Reject all ERC223 compatible tokens\n@param from_ address The address that is transferring the tokens\n@param value_ uint256 the amount of the specified token\n@param data_ Bytes The data passed from the caller.",
+            "id": 9393,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "tokenFallback",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9381,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9376,
+                  "name": "from_",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9393,
+                  "src": "660:13:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 9375,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "660:7:27",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9378,
+                  "name": "value_",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9393,
+                  "src": "675:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9377,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "675:7:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9380,
+                  "name": "data_",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9393,
+                  "src": "691:20:27",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 9379,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "691:5:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "659:53:27"
+            },
+            "returnParameters": {
+              "id": 9382,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "727:0:27"
+            },
+            "scope": 9394,
+            "src": "637:143:27",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 9395,
+        "src": "352:431:27"
+      }
+    ],
+    "src": "0:784:27"
+  },
+  "legacyAST": {
+    "absolutePath": "/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/ownership/HasNoTokens.sol",
+    "exportedSymbols": {
+      "HasNoTokens": [
+        9394
+      ]
+    },
+    "id": 9395,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 9371,
+        "literals": [
+          "solidity",
+          "^",
+          "0.5",
+          ".10"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:27"
+      },
+      {
+        "absolutePath": "/D/projects/ethereum/crypto-bliz/token/crypto-bliz/contracts/openzeppelin-solidity/ownership/CanReclaimToken.sol",
+        "file": "./CanReclaimToken.sol",
+        "id": 9372,
+        "nodeType": "ImportDirective",
+        "scope": 9395,
+        "sourceUnit": 9158,
+        "src": "26:31:27",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 9373,
+              "name": "CanReclaimToken",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 9157,
+              "src": "376:15:27",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_CanReclaimToken_$9157",
+                "typeString": "contract CanReclaimToken"
+              }
+            },
+            "id": 9374,
+            "nodeType": "InheritanceSpecifier",
+            "src": "376:15:27"
+          }
+        ],
+        "contractDependencies": [
+          9157,
+          9660
+        ],
+        "contractKind": "contract",
+        "documentation": "@title Contracts that should not own Tokens\n@author Remco Bloemen <remco@2π.com>\n@dev This blocks incoming ERC223 tokens to prevent accidental loss of tokens.\nShould tokens (any ERC20Basic compatible) end up in the contract, it allows the\nowner to reclaim the tokens.",
+        "fullyImplemented": true,
+        "id": 9394,
+        "linearizedBaseContracts": [
+          9394,
+          9157,
+          9660
+        ],
+        "name": "HasNoTokens",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 9392,
+              "nodeType": "Block",
+              "src": "727:53:27",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 9383,
+                    "name": "from_",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 9376,
+                    "src": "733:5:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 9384,
+                  "nodeType": "ExpressionStatement",
+                  "src": "733:5:27"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 9385,
+                    "name": "value_",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 9378,
+                    "src": "744:6:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 9386,
+                  "nodeType": "ExpressionStatement",
+                  "src": "744:6:27"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 9387,
+                    "name": "data_",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 9380,
+                    "src": "756:5:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_calldata_ptr",
+                      "typeString": "bytes calldata"
+                    }
+                  },
+                  "id": 9388,
+                  "nodeType": "ExpressionStatement",
+                  "src": "756:5:27"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "id": 9389,
+                      "name": "revert",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        11078,
+                        11079
+                      ],
+                      "referencedDeclaration": 11078,
+                      "src": "767:6:27",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_revert_pure$__$returns$__$",
+                        "typeString": "function () pure"
+                      }
+                    },
+                    "id": 9390,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "767:8:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 9391,
+                  "nodeType": "ExpressionStatement",
+                  "src": "767:8:27"
+                }
+              ]
+            },
+            "documentation": "@dev Reject all ERC223 compatible tokens\n@param from_ address The address that is transferring the tokens\n@param value_ uint256 the amount of the specified token\n@param data_ Bytes The data passed from the caller.",
+            "id": 9393,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "tokenFallback",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 9381,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 9376,
+                  "name": "from_",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9393,
+                  "src": "660:13:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 9375,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "660:7:27",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9378,
+                  "name": "value_",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9393,
+                  "src": "675:14:27",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 9377,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "675:7:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 9380,
+                  "name": "data_",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 9393,
+                  "src": "691:20:27",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes_calldata_ptr",
+                    "typeString": "bytes"
+                  },
+                  "typeName": {
+                    "id": 9379,
+                    "name": "bytes",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "691:5:27",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes_storage_ptr",
+                      "typeString": "bytes"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "659:53:27"
+            },
+            "returnParameters": {
+              "id": 9382,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "727:0:27"
+            },
+            "scope": 9394,
+            "src": "637:143:27",
+            "stateMutability": "pure",
+            "superFunction": null,
+            "visibility": "external"
+          }
+        ],
+        "scope": 9395,
+        "src": "352:431:27"
+      }
+    ],
+    "src": "0:784:27"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.10+commit.5a6ea5b1.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2019-07-27T02:38:41.237Z",
+  "devdoc": {
+    "author": "Remco Bloemen <remco@2π.com>",
+    "details": "This blocks incoming ERC223 tokens to prevent accidental loss of tokens. Should tokens (any ERC20Basic compatible) end up in the contract, it allows the owner to reclaim the tokens.",
+    "methods": {
+      "reclaimToken(address)": {
+        "details": "Reclaim all ERC20Basic compatible tokens",
+        "params": {
+          "token": "ERC20Basic The address of the token contract"
+        }
+      },
+      "tokenFallback(address,uint256,bytes)": {
+        "details": "Reject all ERC223 compatible tokens",
+        "params": {
+          "data_": "Bytes The data passed from the caller.",
+          "from_": "address The address that is transferring the tokens",
+          "value_": "uint256 the amount of the specified token"
+        }
+      },
+      "transferOwnership(address)": {
+        "details": "Allows the current owner to transfer control of the contract to a newOwner.",
+        "params": {
+          "newOwner": "The address to transfer ownership to."
+        }
+      }
+    },
+    "title": "Contracts that should not own Tokens"
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
